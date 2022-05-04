@@ -6,10 +6,6 @@ enabled = 0
 serial_list = [control.device_serial_number()]
 choice_list = [0]
 
-radio.on_received_value(on_received_value)
-input.on_button_pressed(Button.A, on_button_pressed_a)
-input.on_button_pressed(Button.B, reset)
-
 def on_received_value(name, value):
     global serial_list, choice_list
     if enabled == 1:
@@ -32,3 +28,12 @@ def on_button_pressed_a():
 def reset():
     serial_list = [control.device_serial_number()]
     choice_list = [0]
+
+def show_results():
+    for i in range(1, 5):
+        print(String.from_char_code(64+i)+": "+choice_list.count(i))
+        
+input.on_logo_event(TouchButtonEvent.PRESSED, show_results)
+radio.on_received_value(on_received_value)
+input.on_button_pressed(Button.A, on_button_pressed_a)
+input.on_button_pressed(Button.B, reset)
