@@ -16,13 +16,13 @@ def on_received_value(name, value):
             else:
                 choice_list.append(value)
                 serial_list.append(remote_serial)
-            print("Novy hlas: "+String.from_char_code(64+value)+" od "+remote_serial)
+            print("Nový hlas: "+String.from_char_code(64+value)+" od "+remote_serial)
             music.play_tone(Note.C, 500)
 
 def on_button_pressed_a():
     global enabled
-    if enabled == 0: enabled = 1;basic.show_number(1, 0)
-    else: enabled = 0;basic.show_number(0, 0)
+    if enabled == 0: enabled = 1
+    else: enabled = 0
     radio.send_value("enabled", enabled)
 
 def reset():
@@ -30,9 +30,9 @@ def reset():
     choice_list = [0]
 
 def show_results():
-    for i in range(1, 5):
-        print(String.from_char_code(64+i)+": "+choice_list.count(i))
-    print(choice_list)
+    for i in range(1, 27):
+        if choice_list.count(i) != 0: #vypíše pouze nenulové hlasy
+            print(String.from_char_code(64+i)+": "+choice_list.count(i))
         
 input.on_logo_event(TouchButtonEvent.PRESSED, show_results)
 radio.on_received_value(on_received_value)
