@@ -2,15 +2,22 @@ radio.set_group(69)
 radio.set_transmit_power(7)
 radio.set_transmit_serial_number(True)
 
-input.on_button_pressed(Button.A, ChangeVote)
-input.on_button_pressed(Button.B, SendVote)
+input.on_button_pressed(Button.A, ChangeVoteUp)
+input.on_button_pressed(Button.B, ChangeVoteDown)
+input.on_button_pressed(Button.AB, SendVote)
 
 vote = -1
 enabled = 0
 
-def ChangeVote():
+def ChangeVoteUp():
     global vote
-    vote = (vote + 1) % 4
+    vote = (vote + 1) % 26
+    basic.show_string(String.from_char_code(vote+65), 0)
+
+def ChangeVoteDown():
+    global vote
+    if vote == 0: vote = 25
+    else: vote -= 1
     basic.show_string(String.from_char_code(vote+65), 0)
 
 def SendVote():
